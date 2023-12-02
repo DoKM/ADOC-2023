@@ -16,31 +16,40 @@
 	$: run(data);
 
 	function extractNumbersAndStrings(inputString: string) {
-		const numberWords = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-
-		const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+		const numberWords: { string: string; number: string }[] = [
+			{ string: 'one', number: '1' },
+			{ string: 'two', number: '2' },
+			{ string: 'three', number: '3' },
+			{ string: 'four', number: '4' },
+			{ string: 'five', number: '5' },
+			{ string: 'six', number: '6' },
+			{ string: 'seven', number: '7' },
+			{ string: 'eight', number: '8' },
+			{ string: 'nine', number: '9' },
+			{ string: '1', number: '1' },
+			{ string: '2', number: '2' },
+			{ string: '3', number: '3' },
+			{ string: '4', number: '4' },
+			{ string: '5', number: '5' },
+			{ string: '6', number: '6' },
+			{ string: '7', number: '7' },
+			{ string: '8', number: '8' },
+			{ string: '9', number: '9' }
+		];
 
 		let result: number[] = [];
 
 		for (let i = 0; i < numberWords.length; i++) {
-			const word = numberWords[i];
+			const word = numberWords[i].string;
 			const regex = new RegExp(word, 'gi');
 			let match;
 			while ((match = regex.exec(inputString)) !== null) {
 				console.log(match.index, i + 1);
-				result[match.index] = i + 1;
+				result[match.index] = parseInt(numberWords[i].number);
 			}
 		}
 
 		// Extract string representations of numbers
-		for (let i = 0; i < numbers.length; i++) {
-			const word = numbers[i];
-			const regex = new RegExp(word, 'gi');
-			let match;
-			while ((match = regex.exec(inputString)) !== null) {
-				result[match.index] = i + 1; // Add numbers.length to avoid overlap
-			}
-		}
 
 		//remove all undefined values from the array
 		result = result.filter((value) => value !== undefined);
