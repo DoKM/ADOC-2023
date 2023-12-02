@@ -1,10 +1,10 @@
 <script lang="ts">
-	const maxDays: number = 1;
+	const maxDays: number = 2;
 
-    let days: number[] = [];
-    for (let i = 1; i <= maxDays; i++) {
-        days.push(i);
-    }
+	let days: number[] = [];
+	for (let i = 1; i <= maxDays; i++) {
+		days.push(i);
+	}
 </script>
 
 <h1>Welcome to SvelteKit</h1>
@@ -12,6 +12,5 @@
 
 <!-- create a for loop which creates a <a> link to /day/{index}, there should be a max value -->
 {#each days as day}
-    <a href="/day/{day}">Day {day}</a>
+	<a href="/day/{day}">Day {day}</a>
 {/each}
-
