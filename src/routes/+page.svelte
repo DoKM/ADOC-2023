@@ -1,5 +1,11 @@
 <script lang="ts">
-	const maxDays: number = 2;
+	// get the current day from the dateetime
+	let date = new Date();
+	// if the current day is less than december 1st 2023, then the max day is 0;
+	// if the current day is more than december 25th 2023, then the max day is 25;
+	// otherwise the max day is the current day
+	let maxDays =
+		date.getMonth() == 11 && date.getDate() > 25 ? 25 : date.getDate() < 1 ? 0 : date.getDate();
 
 	let days: number[] = [];
 	for (let i = 1; i <= maxDays; i++) {
