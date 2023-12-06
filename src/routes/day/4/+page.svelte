@@ -5,27 +5,27 @@
 	onMount(async () => {
 		originalData = await loadFile('data/day4.txt');
 		data = originalData;
-		
+
 		run();
 	});
 	let data = '';
 	let textData = '';
-	let dataArr: (string|card)[] = [];
+	let dataArr: (string | card)[] = [];
 	type card = {
-		id: number
-		myNumbers: number[]
-		winningNumbers: number[]
-		wins: number,
-		points: number
-	}
-	
+		id: number;
+		myNumbers: number[];
+		winningNumbers: number[];
+		wins: number;
+		points: number;
+	};
+
 	let sum = 0;
 	let cards: card[] = [];
 
 	async function run() {
 		// split the data into an array on every new line
 		dataArr = data.split('\n');
-/**
+		/**
  * Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
 Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19
 Card 3:  1 21 53 59 44 | 69 82 63 72 16 21 14  1
@@ -33,10 +33,10 @@ Card 4: 41 92 73 84 69 | 59 84 76 51 58  5 54 83
 Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
 Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
  */
-		let regex = /Card +(\d+): ((?: ?\d+ +)+)\s*\|\s*((?: ?\d+ +)+\d+)/;
+		let regex = /Card (\d+): ((?: ?\d+ +)+)\s*\|\s*((?: ?\d+ +)+\d+)/;
 		cards = [];
 		for (let line of dataArr) {
-			if(typeof line === 'object'){
+			if (typeof line === 'object') {
 				continue;
 			}
 			let match = regex.exec(line);
@@ -44,20 +44,26 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
 				let card: card = {
 					id: parseInt(match[1]),
 					// filter out empty string and
-					myNumbers: match[2].split(' ').filter(n => n !== '').map(n => parseInt(n)),
-					winningNumbers: match[3].split(' ').filter(n => n !== '').map(n => parseInt(n)),
+					myNumbers: match[2]
+						.split(' ')
+						.filter((n) => n !== '')
+						.map((n) => parseInt(n)),
+					winningNumbers: match[3]
+						.split(' ')
+						.filter((n) => n !== '')
+						.map((n) => parseInt(n)),
 					wins: 0,
 					points: 0
-				}
+				};
 				cards.push(card);
 			}
 		}
 
-		cards.forEach(card => {
-			card.wins = card.myNumbers.filter(n => card.winningNumbers.includes(n)).length;
+		cards.forEach((card) => {
+			card.wins = card.myNumbers.filter((n) => card.winningNumbers.includes(n)).length;
 		});
 
-		cards.forEach(card =>{
+		cards.forEach((card) => {
 			// if(card.wins === 0){
 			// 	card.points = 0;
 			// } else if(card.wins === 1){
@@ -76,17 +82,16 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
 			// 	card.points = 64;
 			// }
 			// simply the above code
-			if(card.wins === 0){
+			if (card.wins === 0) {
 				card.points = 0;
 			} else {
 				card.points = Math.pow(2, card.wins - 1);
 			}
+			card.points = Math.pow(2, card.wins);
 		});
 
 		sum = cards.reduce((acc, card) => acc + card.points, 0);
 	}
-
-	
 </script>
 
 <h1>Day 4</h1>
@@ -102,8 +107,6 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
 	<h1>Result</h1>
 	<p>{sum}</p>
 {/if}
-
-
 
 {#each cards as card}
 	<div>
